@@ -4,11 +4,17 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { appConfig } from './app.config';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+
+    // Adicione a configuração do appConfig
+    ...appConfig.providers
   ],
-});
+})
+  .then(() => console.log('🚀 Aplicação inicializada!'))
+  .catch((err) => console.error('💥 Falha crítica:', err));
