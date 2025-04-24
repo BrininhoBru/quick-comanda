@@ -1,0 +1,7 @@
+{
+  "name": "quick-comanda",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
