@@ -1,0 +1,48 @@
+/* Centralização e responsividade */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+    /* Ajuste conforme altura do header */
+    padding: 20px;
+}
+
+form {
+    width: 100%;
+    max-width: 400px;
+    /* Largura máxima do formulário */
+}
+
+.form-item {
+    margin-bottom: 16px;
+}
+
+.submit-button {
+    margin-top: 24px;
+}
+
+.register-link {
+    display: block;
+    margin-top: 24px;
+    color: var(--ion-color-medium);
+
+    a {
+        color: var(--ion-color-primary);
+        text-decoration: none;
+        font-weight: 500;
+        cursor: pointer;
+    }
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 576px) {
+    .form-container {
+        min-height: calc(100vh - 100px);
+        padding: 16px;
+    }
+
+    form {
+        padding: 16px;
+    }
+}
