@@ -1,3 +1,5 @@
+import { FieldValue } from "@angular/fire/firestore";
+
 export interface Product {
   readonly id?: string;
   name: string;
@@ -5,6 +7,8 @@ export interface Product {
   category: ProductCategory;
   isAvailable: boolean;
   imageUrl?: string;
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
 }
 
 export type ProductCategory = 'food' | 'drink' | 'portion' | 'other';

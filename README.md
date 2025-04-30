@@ -44,3 +44,22 @@ Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
 - __src/app/__: Contém os componentes e páginas do aplicativo.
 - __src/environments/__: Configurações de ambiente (desenvolvimento e produção).
 - __src/theme/__: Arquivos de tema e estilos globais.
+
+## Interface de Produto
+
+A interface `Product` é utilizada para representar os produtos no sistema. Ela está localizada em `src/app/shared/models/Product.ts` e possui as seguintes propriedades:
+
+- `id?` (string): Identificador único do produto.
+- `name` (string): Nome do produto.
+- `price` (number): Preço do produto.
+- `category` (ProductCategory): Categoria do produto, que pode ser:
+  - `food`: Comida
+  - `drink`: Bebida
+  - `portion`: Porção
+  - `other`: Outro
+- `isAvailable` (boolean): Indica se o produto está disponível.
+- `imageUrl?` (string): URL da imagem do produto (opcional).
+- `createdAt` (FieldValue): Data de criação do produto.
+- `updatedAt` (FieldValue): Data da última atualização do produto.
+
+A interface também utiliza o tipo `ProductCategory` para definir as categorias disponíveis.
