@@ -18,22 +18,16 @@
       <ion-item class="form-item">
         <ion-label position="floating">Senha</ion-label>
         <ion-input type="password" formControlName="password" autocomplete="current-password" required>
+          <ion-input-password-toggle slot="end" color="dark"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
 
       <!-- Botão de Login -->
-      <ion-button type="submit" expand="block" class="submit-button" [disabled]="loginForm.invalid || loading">
-        <ion-spinner *ngIf="loading"></ion-spinner>
+      <ion-button type="submit" expand="block" class="submit-button" [disabled]="loginForm.invalid || loading()">
+        <ion-spinner *ngIf="loading()"></ion-spinner>
         Entrar
       </ion-button>
 
-      <!-- Link para Registrar/Criar conta -->
-      <ion-text class="ion-text-center register-link">
-        <p>
-          Não tem conta?
-          <a (click)="goToRegister()">Criar conta</a>
-        </p>
-      </ion-text>
     </form>
   </div>
 </ion-content>

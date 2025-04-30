@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
   private _toastCtrl = inject(ToastController);
 
   loginForm!: FormGroup;
-  loading = false;
+  loading = signal(false);
 
   ngOnInit() {
     this.loginForm = this._fb.group({
@@ -38,7 +38,7 @@ export class LoginPage implements OnInit {
   async onSubmit() {
     if (this.loginForm.invalid) return;
 
-    this.loading = true;
+    this.loading.set(true);
     const loading = await this._loadingCtrl.create({ message: 'Autenticando...' });
     await loading.present();
 
@@ -47,11 +47,12 @@ export class LoginPage implements OnInit {
       await signInWithEmailAndPassword(this._auth, email, password);
 
       await loading.dismiss();
+      this.loading.set(false);
       this._router.navigate(['/home']);
     } catch (error) {
       await loading.dismiss();
       this.showErrorToast(error);
-      this.loading = false;
+      this.loading.set(false);
     }
   }
 
@@ -65,8 +66,6 @@ export class LoginPage implements OnInit {
       case 'auth/wrong-password':
         message = 'Senha incorreta';
         break;
-      default:
-        message = 'Erro ao realizar o Login.';
     }
 
     const toast = await this._toastCtrl.create({
