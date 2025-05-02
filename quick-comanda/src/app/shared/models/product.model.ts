@@ -11,4 +11,9 @@ export interface Product {
   updatedAt: FieldValue;
 }
 
+export interface FormattedProduct extends Product {
+  formattedPrice: string;
+  categoryLabel: string;
+}
+
 export type ProductCategory = 'food' | 'drink' | 'portion' | 'other';
