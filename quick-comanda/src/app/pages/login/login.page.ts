@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
 
       await loading.dismiss();
       this.loading.set(false);
-      this._router.navigate(['/home']);
+      this._router.navigate(['/tabs/home']);
     } catch (error) {
       await loading.dismiss();
       this.showErrorToast(error);
