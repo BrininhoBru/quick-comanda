@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
-import { ProductsModalComponent } from 'src/app/shared/components/products-modal/products-modal.component';
+import { ProductsListModalComponent } from 'src/app/shared/components/products-list-modal/products-list-modal.component';
 
 @Component({
   selector: 'quick-store',
@@ -17,9 +17,9 @@ export class StorePage implements OnInit {
 
   ngOnInit() { }
 
-  async openProductsModal() {
+  async openProductsListModal() {
     const modal = await this.modalCtrl.create({
-      component: ProductsModalComponent
+      component: ProductsListModalComponent,
     });
 
     modal.present();

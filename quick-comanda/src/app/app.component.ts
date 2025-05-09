@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { home, settings, storefront, arrowBack } from 'ionicons/icons';
+import { home, settings, storefront, arrowBack, add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
 @Component({
@@ -14,7 +14,8 @@ export class AppComponent {
       home,
       settings,
       storefront,
-      arrowBack
+      arrowBack,
+      add
     });
   }
 }

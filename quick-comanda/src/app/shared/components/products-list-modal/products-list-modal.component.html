@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Produtos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="openProductRegistrationModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-list>
+    @for (product of filteredProducts(); track product.id){
+    <ion-item>
+      <ion-label>
+        <h2>{{ product.name }}</h2>
+        <p>R$ {{ product.price | number: '1.2-2' }}</p>
+      </ion-label>
+    </ion-item>
+    } @empty{
+    <ion-item>
+      <ion-label>
+        <h2>Nenhum produto encontrado</h2>
+      </ion-label>
+    </ion-item>
+    }
+  </ion-list>
+
+</ion-content>
