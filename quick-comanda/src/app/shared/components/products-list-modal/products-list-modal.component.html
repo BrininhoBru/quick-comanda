@@ -20,9 +20,15 @@
   <ion-list>
     @for (product of filteredProducts(); track product.id){
     <ion-item>
+      <ion-thumbnail slot="start">
+        <img [src]="product.imageUrl" />
+      </ion-thumbnail>
       <ion-label>
         <h2>{{ product.name }}</h2>
         <p>R$ {{ product.price | number: '1.2-2' }}</p>
+      </ion-label>
+      <ion-label slot="end">
+        <p>{{ product.categoryDTO.label }}</p>
       </ion-label>
     </ion-item>
     } @empty{

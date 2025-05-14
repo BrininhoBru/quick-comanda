@@ -2,10 +2,12 @@ import { inject, Injectable } from "@angular/core";
 import { addDoc, collection, collectionData, Firestore, orderBy, query, serverTimestamp, where } from "@angular/fire/firestore";
 import { FormattedProduct, Product } from "../../models/product.model";
 import { map, Observable } from "rxjs";
+import { CategoryService } from "../categories/category.service";
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
   private firestore = inject(Firestore);
+  private categorysService = inject(CategoryService);
 
   /**
    * The function `createProduct` asynchronously adds a new product to a Firestore collection with
@@ -41,17 +43,17 @@ export class ProductsService {
     );
   }
 
-/**
- * The function `getProductsByCategory` retrieves products from a Firestore collection based on a
- * specified category and returns them in a formatted manner.
- * @param {string} category - The `getProductsByCategory` function takes a `category` parameter as
- * input. This parameter is used to query the Firestore database for products that belong to the
- * specified category. The function then orders the products by name and returns the formatted products
- * as an observable stream.
- * @returns The `getProductsByCategory` function is returning an Observable that emits an array of
- * products filtered by the specified category. The products are formatted using the `formatProducts`
- * method before being emitted by the Observable.
- */
+  /**
+   * The function `getProductsByCategory` retrieves products from a Firestore collection based on a
+   * specified category and returns them in a formatted manner.
+   * @param {string} category - The `getProductsByCategory` function takes a `category` parameter as
+   * input. This parameter is used to query the Firestore database for products that belong to the
+   * specified category. The function then orders the products by name and returns the formatted products
+   * as an observable stream.
+   * @returns The `getProductsByCategory` function is returning an Observable that emits an array of
+   * products filtered by the specified category. The products are formatted using the `formatProducts`
+   * method before being emitted by the Observable.
+   */
   getProductsByCategory(category: string) {
     const q = query(
       collection(this.firestore, 'products'),
@@ -64,32 +66,11 @@ export class ProductsService {
     );;
   }
 
-/**
- * The function getCategoryLabel takes a category string as input and returns the corresponding label
- * from a predefined mapping, or the original category if no match is found.
- * @param {string} category - The `getCategoryLabel` function takes a `category` parameter, which is a
- * string representing a category of items. The function then looks up this category in a predefined
- * object `categories` to get the corresponding label for that category. If the category is found in
- * the object, it returns the corresponding
- * @returns The function `getCategoryLabel` takes a `category` string as input and returns the
- * corresponding label from the `categories` object. If the `category` matches one of the keys in the
- * `categories` object, it returns the corresponding label. If the `category` does not match any key in
- * the `categories` object, it returns the original `category` string.
- */
-  getCategoryLabel(category: string): string {
-    const categories: Record<string, string> = {
-      'bebidas': 'Bebidas',
-      'pratos': 'Pratos Principais',
-      'sobremesas': 'Sobremesas'
-    };
-    return categories[category] || category;
-  }
-
   private formatProducts(products: Product[]): FormattedProduct[] {
     return products.map(product => ({
       ...product,
       formattedPrice: this.formatPrice(product.price),
-      categoryLabel: this.getCategoryLabel(product.category)
+      categoryDTO: this.categorysService.getCategory(product.category) || { value: '', label: 'Categoria desconhecida', icon: '' }
     }));
   }
 

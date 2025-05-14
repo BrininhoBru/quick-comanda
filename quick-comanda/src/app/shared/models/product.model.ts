@@ -1,4 +1,5 @@
 import { FieldValue } from "@angular/fire/firestore";
+import { Category } from "./category.model";
 
 export interface Product {
   readonly id?: string;
@@ -13,7 +14,7 @@ export interface Product {
 
 export interface FormattedProduct extends Product {
   formattedPrice: string;
-  categoryLabel: string;
+  categoryDTO: Category
 }
 
 export type ProductCategory = 'food' | 'drink' | 'portion' | 'other';

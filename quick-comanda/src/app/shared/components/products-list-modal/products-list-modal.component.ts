@@ -4,6 +4,7 @@ import { FormattedProduct } from '../../models/product.model';
 import { ProductsService } from '../../services/products/products.service';
 import { CommonModule } from '@angular/common';
 import { ProductsRegistrationModalComponent } from '../products-registration-modal/products-registration-modal.component';
+import { CategoryService } from '../../services/categories/category.service';
 
 @Component({
   selector: 'quick-products-list-modal',
@@ -25,7 +26,7 @@ export class ProductsListModalComponent implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private productsService: ProductsService
+    private productsService: ProductsService,
   ) {
     this.productsService.getProducts().subscribe(products => {
       this.products.set(products);
@@ -47,5 +48,4 @@ export class ProductsListModalComponent implements OnInit {
 
     const { data } = await modal.onWillDismiss();
   }
-
 }

@@ -1,8 +1,54 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ editMode ? 'Editar' : 'Novo' }} Produto</ion-title>
+    <ion-title>{{ editMode ? "Editar" : "Novo" }} Produto</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Fechar</ion-button>
+      <ion-button (click)="closeModal()">Cancelar</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="productForm" (ngSubmit)="submit()">
+    <!-- Nome -->
+    <ion-item>
+      <ion-input label="Nome" labelPlacement="stacked" formControlName="name" type="text"></ion-input>
+      @if (productForm.get('name')?.invalid && productForm.get('name')?.touched) {
+      <ion-note slot="error">Mínimo 3 caracteres</ion-note>
+      }
+    </ion-item>
+
+    <!-- Preço -->
+    <ion-item>
+      <ion-input label="Preço" labelPlacement="stacked" formControlName="price" type="number" step="0.01" min="0,01">
+      </ion-input>
+    </ion-item>
+
+    <!-- Categoria -->
+    <ion-item>
+      <ion-select label="Categorias" labelPlacement="stacked" formControlName="category" interface="popover">
+        @for (cat of categories; track cat.value) {
+        <ion-select-option [value]="cat.value">
+          {{ cat.label }}
+        </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <!-- Upload de Imagem -->
+    <ion-item button (click)="uploadImage()">
+      <ion-label>Imagem</ion-label>
+      <ion-thumbnail slot="end">
+        <img [src]="'assets/placeholder.png'" />
+      </ion-thumbnail>
+    </ion-item>
+
+    <!-- Botão de Submit -->
+    <ion-button type="submit" expand="block" [disabled]="productForm.invalid || loading()">
+      @if (loading()) {
+      <ion-spinner></ion-spinner>
+      } @else {
+      {{ editMode ? "Atualizar" : "Cadastrar" }}
+      }
+    </ion-button>
+  </form>
+</ion-content>
