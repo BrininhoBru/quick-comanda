@@ -10,15 +10,19 @@ export class ProductsService {
   private categorysService = inject(CategoryService);
 
   /**
-   * The function `createProduct` asynchronously adds a new product to a Firestore collection with
-   * timestamps for creation and update.
-   * @param product - The `product` parameter is an object that represents a product with properties
-   * such as `name`, `price`, `description`, and any other relevant information about the product. The
-   * `Omit<Product, 'id'>` type indicates that the `id` property should be omitted from the `product`
-   * @returns The function `createProduct` is returning the `id` of the newly created product document
-   * in the Firestore database.
+   * Creates a new product in the Firestore database.
+   *
+   * @param product - The product data to be created, excluding the `id` field.
+   * @returns A promise that resolves to the ID of the newly created product document.
+   *
+   * @remarks
+   * This method uses Firestore's `addDoc` function to add a new document to the
+   * 'products' collection. The `createdAt` and `updatedAt` fields are automatically
+   * set to the current server timestamp.
+   *
+   * @throws Will throw an error if the Firestore operation fails.
    */
-  async createProduct(product: Omit<Product, 'id'>) {
+  async createProduct(product: Omit<Product, 'id'>): Promise<string> {
     const docRef = await addDoc(collection(this.firestore, 'products'), {
       ...product,
       createdAt: serverTimestamp(),
@@ -28,14 +32,11 @@ export class ProductsService {
   }
 
   /**
-   * The function retrieves products from a Firestore collection and formats them before returning
-   * them.
-   * @returns The `getProducts()` function is returning an Observable that emits an array of products
-   * after formatting them using the `formatProducts()` method. The products are retrieved from a
-   * Firestore collection named 'products' and the 'idField' option is set to 'id' for identifying the
-   * document IDs.
+   * Retrieves a list of products from the Firestore 'products' collection and formats them.
+   *
+   * @returns An observable that emits an array of formatted products.
    */
-  getProducts() {
+  getProducts(): Observable<FormattedProduct[]> {
     return collectionData(collection(this.firestore, 'products'), {
       idField: 'id'
     }).pipe(
@@ -44,17 +45,12 @@ export class ProductsService {
   }
 
   /**
-   * The function `getProductsByCategory` retrieves products from a Firestore collection based on a
-   * specified category and returns them in a formatted manner.
-   * @param {string} category - The `getProductsByCategory` function takes a `category` parameter as
-   * input. This parameter is used to query the Firestore database for products that belong to the
-   * specified category. The function then orders the products by name and returns the formatted products
-   * as an observable stream.
-   * @returns The `getProductsByCategory` function is returning an Observable that emits an array of
-   * products filtered by the specified category. The products are formatted using the `formatProducts`
-   * method before being emitted by the Observable.
+   * Retrieves a list of formatted products filtered by the specified category.
+   *
+   * @param category - The category to filter products by.
+   * @returns An observable that emits an array of formatted products.
    */
-  getProductsByCategory(category: string) {
+  getProductsByCategory(category: string): Observable<FormattedProduct[]> {
     const q = query(
       collection(this.firestore, 'products'),
       where('category', '==', category),
