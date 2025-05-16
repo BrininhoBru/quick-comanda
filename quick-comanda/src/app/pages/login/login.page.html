@@ -24,8 +24,11 @@
 
       <!-- Botão de Login -->
       <ion-button type="submit" expand="block" class="submit-button" [disabled]="loginForm.invalid || loading()">
-        <ion-spinner *ngIf="loading()"></ion-spinner>
+        @if (loading()) {
+        <ion-spinner></ion-spinner>
+        } @else {
         Entrar
+        }
       </ion-button>
 
     </form>
