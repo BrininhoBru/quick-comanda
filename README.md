@@ -2,6 +2,9 @@
 
 Quick Comanda é um projeto baseado em Angular e Ionic, projetado para criar uma aplicação moderna e responsiva. Ele utiliza as melhores práticas de desenvolvimento para fornecer uma base sólida para o desenvolvimento de aplicativos.
 
+## Licença
+Este projeto está licenciado sob a [GPL v3](./LICENSE).
+
 ## Pré-requisitos
 
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas:
