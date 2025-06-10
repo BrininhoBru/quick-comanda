@@ -13,7 +13,7 @@ import { CategoryService } from '../../services/categories/category.service';
   standalone: true,
   imports: [IonicModule, CommonModule],
 })
-export class ProductsListModalComponent implements OnInit {
+export class ProductsListModalComponent {
   searchTerm = signal('');
 
   products = signal<FormattedProduct[]>([]);
@@ -32,8 +32,6 @@ export class ProductsListModalComponent implements OnInit {
       this.products.set(products);
     });
   }
-
-  ngOnInit() { }
 
   closeModal() {
     this.modalCtrl.dismiss();

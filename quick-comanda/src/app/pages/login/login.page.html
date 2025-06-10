@@ -1,36 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Acesso ao Sistema</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <div class="form-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <!-- Email -->
-      <ion-item class="form-item">
-        <ion-label position="floating">E-mail</ion-label>
-        <ion-input type="email" formControlName="email" autocomplete="email" required>
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="login-container">
+    <form class="login-form" (ngSubmit)="login()">
+
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input #emailInput type="email" name="email" required placeholder="seu.email@exemplo.com"
+          [(ngModel)]="email" [clearInput]="true">
         </ion-input>
       </ion-item>
 
-      <!-- Senha -->
-      <ion-item class="form-item">
-        <ion-label position="floating">Senha</ion-label>
-        <ion-input type="password" formControlName="password" autocomplete="current-password" required>
+      <ion-item>
+        <ion-label position="stacked">Senha</ion-label>
+        <ion-input name="password" required placeholder="••••••••" type="password" [(ngModel)]="password"
+          [clearInput]="true">
           <ion-input-password-toggle slot="end" color="dark"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
 
-      <!-- Botão de Login -->
-      <ion-button type="submit" expand="block" class="submit-button" [disabled]="loginForm.invalid || loading()">
-        @if (loading()) {
-        <ion-spinner></ion-spinner>
+      <ion-button type="submit" expand="block" color="primary" class="ion-margin-top"
+        [disabled]="authService.isLoading()">
+
+        @if (authService.isLoading()) {
+        <ion-spinner name="crescent" *ngIf="authService.isLoading()"></ion-spinner>
         } @else {
-        Entrar
+        <ion-icon name="log-in" slot="start"></ion-icon>
         }
+
+        Entrar
       </ion-button>
+
+      @if (authService.errorMessage()) {
+      <ion-note color="danger" class="ion-text-center ion-margin-top block">
+        {{ authService.errorMessage() }}
+      </ion-note>
+      }
 
     </form>
   </div>
+
+
 </ion-content>
+
+<!-- <ion-content class="ion-padding"> -->
+<!-- <div class="form-container"> -->
+<!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"> -->
+<!-- Email -->
+<!-- <ion-item class="form-item"> -->
+<!-- <ion-label position="floating">E-mail</ion-label> -->
+<!-- <ion-input type="email" formControlName="email" autocomplete="email" required> -->
+<!-- </ion-input> -->
+<!-- </ion-item> -->
+<!--  -->
+<!-- Senha -->
+<!-- <ion-item class="form-item"> -->
+<!-- <ion-label position="floating">Senha</ion-label> -->
+<!-- <ion-input type="password" formControlName="password" autocomplete="current-password" required> -->
+<!-- <ion-input-password-toggle slot="end" color="dark"></ion-input-password-toggle> -->
+<!-- </ion-input> -->
+<!-- </ion-item> -->
+<!--  -->
+<!-- Botão de Login -->
+<!-- <ion-button type="submit" expand="block" class="submit-button" [disabled]="loginForm.invalid || loading()"> -->
+<!-- @if (loading()) { -->
+<!-- <ion-spinner></ion-spinner> -->
+<!-- } @else { -->
+<!-- Entrar -->
+<!-- } -->
+<!-- </ion-button> -->
+<!--  -->
+<!-- </form> -->
+<!-- </div> -->
+<!-- </ion-content> -->

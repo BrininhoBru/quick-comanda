@@ -11,11 +11,9 @@ import { ProductsListModalComponent } from 'src/app/shared/components/products-l
   standalone: true,
   imports: [IonicModule, CommonModule]
 })
-export class StorePage implements OnInit {
+export class StorePage {
 
   constructor(private modalCtrl: ModalController) { }
-
-  ngOnInit() { }
 
   async openProductsListModal() {
     const modal = await this.modalCtrl.create({

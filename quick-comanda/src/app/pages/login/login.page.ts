@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'quick-login',
@@ -18,65 +19,81 @@ import { LoadingController, ToastController } from '@ionic/angular';
     ReactiveFormsModule
   ]
 })
-export class LoginPage implements OnInit {
-  private _auth = inject(Auth);
-  private _router = inject(Router);
-  private _fb = inject(FormBuilder);
-  private _loadingCtrl = inject(LoadingController);
-  private _toastCtrl = inject(ToastController);
+export class LoginPage {
+  authService = inject(AuthService);
 
-  loginForm!: FormGroup;
-  loading = signal(false);
+  email = '';
+  password = '';
 
-  ngOnInit() {
-    this.loginForm = this._fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-    });
+  constructor() {
+    const savedEmail = localStorage.getItem('lastUserEmail');
+    if (savedEmail) this.email = savedEmail;
   }
 
-  async onSubmit() {
-    if (this.loginForm.invalid) return;
+  async login() {
+    localStorage.setItem('lastUserEmail', this.email);
 
-    this.loading.set(true);
-    const loading = await this._loadingCtrl.create({ message: 'Autenticando...' });
-    await loading.present();
-
-    try {
-      const { email, password } = this.loginForm.value;
-      await signInWithEmailAndPassword(this._auth, email, password);
-
-      await loading.dismiss();
-      this.loading.set(false);
-      this._router.navigate(['/tabs/home']);
-    } catch (error) {
-      await loading.dismiss();
-      this.showErrorToast(error);
-      this.loading.set(false);
-    }
+    await this.authService.login(this.email, this.password);
   }
 
-  private async showErrorToast(error: any) {
-    let message = 'Falha no login. Verifique seus dados!';
+  // private _auth = inject(Auth);
+  // private _router = inject(Router);
+  // private _fb = inject(FormBuilder);
+  // private _loadingCtrl = inject(LoadingController);
+  // private _toastCtrl = inject(ToastController);
 
-    switch (error.code) {
-      case 'auth/user-not-found':
-        message = 'Usuário não encontrado';
-        break;
-      case 'auth/wrong-password':
-        message = 'Senha incorreta';
-        break;
-    }
+  // loginForm!: FormGroup;
+  // loading = signal(false);
 
-    const toast = await this._toastCtrl.create({
-      message,
-      duration: 3000,
-      color: 'danger'
-    });
-    toast.present();
-  }
+  // ngOnInit() {
+  //   this.loginForm = this._fb.group({
+  //     email: ['', [Validators.required, Validators.email]],
+  //     password: ['', [Validators.required, Validators.minLength(6)]],
+  //   });
+  // }
 
-  goToRegister() {
-    console.log('Navegando para a página de registro...');
-  }
+  // async onSubmit() {
+  //   if (this.loginForm.invalid) return;
+
+  //   this.loading.set(true);
+  //   const loading = await this._loadingCtrl.create({ message: 'Autenticando...' });
+  //   await loading.present();
+
+  //   try {
+  //     const { email, password } = this.loginForm.value;
+  //     await signInWithEmailAndPassword(this._auth, email, password);
+
+  //     await loading.dismiss();
+  //     this.loading.set(false);
+  //     this._router.navigate(['/tabs/home']);
+  //   } catch (error) {
+  //     await loading.dismiss();
+  //     this.showErrorToast(error);
+  //     this.loading.set(false);
+  //   }
+  // }
+
+  // private async showErrorToast(error: any) {
+  //   let message = 'Falha no login. Verifique seus dados!';
+
+  //   switch (error.code) {
+  //     case 'auth/user-not-found':
+  //       message = 'Usuário não encontrado';
+  //       break;
+  //     case 'auth/wrong-password':
+  //       message = 'Senha incorreta';
+  //       break;
+  //   }
+
+  //   const toast = await this._toastCtrl.create({
+  //     message,
+  //     duration: 3000,
+  //     color: 'danger'
+  //   });
+  //   toast.present();
+  // }
+
+  // goToRegister() {
+  //   console.log('Navegando para a página de registro...');
+  // }
 }

@@ -9,11 +9,6 @@ import { IonicModule } from '@ionic/angular';
   standalone: true,
   imports: [IonicModule, CommonModule]
 })
-export class OrderPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class OrderPage {
 
 }
