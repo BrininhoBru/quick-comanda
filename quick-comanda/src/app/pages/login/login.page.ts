@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [
-    IonicModule, // Apenas o IonicModule é necessário para suportar todos os componentes do Ionic
+    IonicModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule
@@ -26,8 +26,8 @@ export class LoginPage {
   password = '';
 
   constructor() {
-    const savedEmail = localStorage.getItem('lastUserEmail');
-    if (savedEmail) this.email = savedEmail;
+    // con
+    // (savedEmail) this.email = savedEmail;
   }
 
   async login() {

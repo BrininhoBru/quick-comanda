@@ -12,7 +12,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
 
-    // Adicione a configuração do appConfig
     ...appConfig.providers
   ],
 })

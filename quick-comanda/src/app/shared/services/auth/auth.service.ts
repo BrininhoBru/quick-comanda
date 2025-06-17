@@ -54,7 +54,7 @@ export class AuthService {
         await this.fetchUserRestaurant(user.uid);
       } else {
         this.resetAuthState();
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
       }
 
       this.isLoading.set(false);
@@ -92,7 +92,7 @@ export class AuthService {
         ...restaurantData
       });
 
-      this.router.navigate(['/tabs/home']);
+      // this.router.navigate(['/tabs/home']);
 
     } catch (error) {
       console.error('Falha ao buscar dados:', error);

@@ -11,6 +11,7 @@ export const routes: Routes = [
   {
     path: 'tabs',
     component: TabsPage,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'home',
@@ -27,8 +28,8 @@ export const routes: Routes = [
     ]
   },
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
+    path: '', 
+    redirectTo: 'login', 
+    pathMatch: 'full'
   },
 ];
