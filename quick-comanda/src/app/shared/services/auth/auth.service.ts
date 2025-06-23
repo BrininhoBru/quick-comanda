@@ -63,19 +63,19 @@ export class AuthService {
 
   private async fetchUserRestaurant(userId: string): Promise<void> {
     try {
-      const employeeQuery = query(
-        collectionGroup(this.firestore, 'employees'),
-        where('userId', '==', userId)
-      );
+      const employeesCollectionGroup = collectionGroup(this.firestore, 'employees');
 
-      const employeeSnapshot = await getDocs(employeeQuery);
+      const q = query(employeesCollectionGroup, where('uid', '==', userId));
 
-      if (employeeSnapshot.empty) {
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
         throw new Error('Nenhum restaurante vinculado a este usuário');
       }
-      const employeeDoc = employeeSnapshot.docs[0];
+
+      const employeeDoc = querySnapshot.docs[0];
       const employeeData = employeeDoc.data() as Employee;
-      this.userRole.set(employeeData.role);
+      this.userRole.set(employeeData.position);
 
       const pathSegments = employeeDoc.ref.path.split('/');
       const restaurantId = pathSegments[1];
@@ -92,7 +92,7 @@ export class AuthService {
         ...restaurantData
       });
 
-      // this.router.navigate(['/tabs/home']);
+      this.router.navigate(['/tabs/home']);
 
     } catch (error) {
       console.error('Falha ao buscar dados:', error);
